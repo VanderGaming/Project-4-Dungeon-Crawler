@@ -4,7 +4,7 @@ class Medkit extends Interactable {
   private int y;
   private int healAmount;
 
-  private static PImage sprite;
+  private PImage sprite;
 
   //constructor
   public Medkit(int x, int y) {
@@ -44,7 +44,7 @@ class Medkit extends Interactable {
 
   @Override
   public void draw() {
-    float size = 40;
+    float size = 50;
     float px = x * size;
     float py = y * size;
 
