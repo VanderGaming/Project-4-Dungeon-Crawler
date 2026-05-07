@@ -81,7 +81,7 @@ class Scene {
 
         // 10% chance enemy
         if (r < 0.10) {
-          Actor enemy = new ENEMY_CLASS_HERE(Direction.SOUTH); // your enemy class
+          Actor enemy = new ENEMY_CLASS_HERE(Direction.SOUTH);
           room[x][y] = enemy;
           enemies.add(enemy);
           positions.put(enemy, new Position(x, y, this));
@@ -94,7 +94,7 @@ class Scene {
 
         // 10% chance obstacle
         else if (r < 0.25) {
-          room[x][y] = new BOULDER_CLASS_HERE(x, y); // whatever obstacle class you make
+          room[x][y] = new BOULDER_CLASS_HERE(x, y);
         }
       }
     }
