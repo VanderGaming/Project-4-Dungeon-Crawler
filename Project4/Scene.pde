@@ -35,73 +35,73 @@ class Scene {
     if (entry == null) {
       return;
     }
-    
+
     this.entry = entry;
+
+    //room size
     this.roomWidth = 10;
-    this.roomHeight = 8; //these can be changed later
-    
-    this.room = new WorldObject[roomWidth][roomHeight]; //new room grid
-    
+    this.roomHeight = 8;
+
+    //create new room grid
+    this.room = new WorldObject[roomWidth][roomHeight];
+
     //reset
     this.enemies = new LinkedList<Actor>();
     this.positions = new HashMap<WorldObject, Position>();
     this.doors = new HashMap<Direction, Position>();
-    
-    //doors
+
+    //place doors
     doors.put(Direction.NORTH, new Position(roomWidth / 2, 0, this));
     doors.put(Direction.SOUTH, new Position(roomWidth / 2, roomHeight - 1, this));
     doors.put(Direction.WEST,  new Position(0, roomHeight / 2, this));
     doors.put(Direction.EAST,  new Position(roomWidth - 1, roomHeight / 2, this));
-    
-    //move player to correct door
+
+    //move player to correct entry door
     Position startPos = doors.get(entry.inverse());
     room[startPos.getX()][startPos.getY()] = player;
     positions.put(player, startPos);
-    
-    //random room content generation algorithm
-    for(int x = 0; x < roomWidth; x++){
-      for(int y = 0; y < roomHeight; y++){
-        if(x == startPos.getX() && y == startPos.getY()) continue; //skip player tile
-        
+
+    //randomly generate room contents
+    for (int x = 0; x < roomWidth; x++) {
+      for (int y = 0; y < roomHeight; y++) {
+
+        //skip player tile
+        if (x == startPos.getX() && y == startPos.getY()) continue;
+
+        //skip door tiles
         boolean isDoorTile = false;
-        for(Position p : doors.values()){
-          if(p.getX() == x && p.getY() == y){
+        for (Position p : doors.values()) {
+          if (p.getX() == x && p.getY() == y) {
             isDoorTile = true;
             break;
           }
         }
-        
+        if (isDoorTile) continue;
+
         float r = random(1);
-        
-        //10% chance for enemy, can be changed
+
+        // 10% chance enemy
         if (r < 0.10) {
-          Actor enemy = new BasicEnemy(Direction.SOUTH);
+          Actor enemy = new ENEMY_CLASS_HERE(Direction.SOUTH);
           room[x][y] = enemy;
           enemies.add(enemy);
           positions.put(enemy, new Position(x, y, this));
         }
 
-        //5% chance for medkit, can be changed
+        // 5% chance medkit
         else if (r < 0.15) {
           room[x][y] = new Medkit(x, y);
         }
 
-        //10% chance for obstacle, can be changed
+        // 10% chance obstacle
         else if (r < 0.25) {
-          room[x][y] = new RockObstacle(x, y);
+          room[x][y] = new BOULDER_CLASS_HERE(x, y);
         }
       }
     }
 
     updateActions(player);
   }
-        
-        
-    
-
-    //----------------------------\\
-    // TODO: COMPLETE THIS METHOD \\
-    //----------------------------\\
 
   /**
    *      Method: private updateActions()
