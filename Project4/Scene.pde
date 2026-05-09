@@ -359,11 +359,51 @@ class Scene {
    */
 
   public void draw() {
-    // Determine the floor size
+    //determine the floor size
     float size = min((float)width / (this.roomWidth + 2), (float)height / (this.roomHeight + 2));
+    float offsetX = (width  - roomWidth  * size) / 2;
+    float offsetY = (height - roomHeight * size) / 2;
 
-    //----------------------------\\
-    // TODO: COMPLETE THIS METHOD \\
-    //----------------------------\\
+    //draw floor grid
+    stroke(50);
+    strokeWeight(2);
+    fill(120);
+
+    for (int x = 0; x < roomWidth; x++) {
+      for (int y = 0; y < roomHeight; y++) {
+        float px = offsetX + x * size;
+        float py = offsetY + y * size;
+        rect(px, py, size, size);
+      }
+    }
+
+    //draw doors
+    fill(200, 200, 50);
+    noStroke();
+
+    for (Direction d : doors.keySet()) {
+      Position p = doors.get(d);
+      float px = offsetX + p.getX() * size;
+      float py = offsetY + p.getY() * size;
+      rect(px, py, size, size);
+    }
+
+    //draw all objects in the room
+    for (int x = 0; x < roomWidth; x++) {
+      for (int y = 0; y < roomHeight; y++) {
+        WorldObject obj = room[x][y];
+        if (obj != null) {
+
+          //move drawing origin to tile center
+          pushMatrix();
+          translate(offsetX + x * size + size/2,
+                    offsetY + y * size + size/2);
+
+          obj.draw();
+
+          popMatrix();
+        }
+      }
+    }
   }
 }
