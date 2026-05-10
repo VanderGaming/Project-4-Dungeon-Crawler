@@ -82,7 +82,7 @@ class Scene {
 
         // 10% chance enemy
         if (r < 0.10) {
-          Actor enemy = new ENEMY_CLASS_HERE(Direction.SOUTH);
+          Actor enemy = new Enemy(Direction.SOUTH);
           room[x][y] = enemy;
           enemies.add(enemy);
           positions.put(enemy, new Position(x, y, this));

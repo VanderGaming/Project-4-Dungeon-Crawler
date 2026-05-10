@@ -54,8 +54,7 @@ class Medkit extends Interactable {
 
   @Override
   public boolean interact(Player player) {
-    float newHealth = min(1.0f, player.getHealth() + healAmount / 100.0f);
-    player.setHealth(newHealth);
+    player.updateHealth(healAmount);
     return true; 
   }
 
